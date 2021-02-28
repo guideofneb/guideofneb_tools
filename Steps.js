@@ -9,34 +9,8 @@ const doallPossibleCases = (toMakeOnePart, fromWhichToMakeOne) => {
         operationType: null
     }
     let allDividingFactorsFound = [];
-    // R1 -> R1 + xR2   : noOfVariables = 1 (only x)
-    for (let i = 1; i <= 50; i++) {
-        let value = toMakeOnePart + (i * fromWhichToMakeOne);
-        if (value === 1) {
-            foundDividingFactor.value = [i];
-            foundDividingFactor.noOfVariables = 1;
-            foundDividingFactor.dealingRow = ROW.R2
-            foundDividingFactor.operationType = OPERATIONTYPE.ADD
-            allDividingFactorsFound.push(foundDividingFactor);
-            found = false;
-            break;
-        }
-    }
-    // R1 -> R1 - xR2   : noOfVariables = 1 (only x)
-    for (let i = 1; i <= 50; i++) {
-        let value = toMakeOnePart - (i * fromWhichToMakeOne);
-        if (value === 1) {
-            foundDividingFactor.value = [i];
-            foundDividingFactor.noOfVariables = 1;
-            foundDividingFactor.dealingRow = ROW.R2
-            foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
-            allDividingFactorsFound.push(foundDividingFactor);
-            break;
-        }
-
-    }
     // R1 -> xR1 + yR2  : noOfVariables = 2 ( x and y)
-    loppFirst:
+    lopp1:
     for (let i = 1; i <= 50; i++) {
         for (let j = 1; j <= 50; j++) {
             let value = (i * toMakeOnePart) + (j * fromWhichToMakeOne);
@@ -46,7 +20,7 @@ const doallPossibleCases = (toMakeOnePart, fromWhichToMakeOne) => {
                 foundDividingFactor.dealingRow = ROW.R2
                 foundDividingFactor.operationType = OPERATIONTYPE.ADD
                 allDividingFactorsFound.push(foundDividingFactor);
-                break loopFirst;
+                break loop1;
             }
         }
     }
@@ -68,6 +42,34 @@ const doallPossibleCases = (toMakeOnePart, fromWhichToMakeOne) => {
     return foundDividingFactor;
 }
 
+
+// Level one Posssible cases contain R(X) -> R(X) + x(R(Y)) 
+// X = RowNumber and x = variableThatWillMakeOneOrZero
+const levelOnePossibleCases = (toMakeOnePart, fromWhichToMakeOne) => {
+    for (let i = 1; i <= 50; i++) {
+        let value = toMakeOnePart + (i * fromWhichToMakeOne);
+        if (value === 1) {
+            foundDividingFactor.value = [i];
+            foundDividingFactor.noOfVariables = 1;
+            foundDividingFactor.dealingRow = ROW.R2
+            foundDividingFactor.operationType = OPERATIONTYPE.ADD
+            allDividingFactorsFound.push(foundDividingFactor);
+            return foundDividingFactor;
+        }
+    }
+    // R1 -> R1 - xR2   : noOfVariables = 1 (only x)
+    for (let i = 1; i <= 50; i++) {
+        let value = toMakeOnePart - (i * fromWhichToMakeOne);
+        if (value === 1) {
+            foundDividingFactor.value = [i];
+            foundDividingFactor.noOfVariables = 1;
+            foundDividingFactor.dealingRow = ROW.R2
+            foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
+            allDividingFactorsFound.push(foundDividingFactor);
+            return foundDividingFactor;
+        }
+    }
+}
 // Fundamental step is the starting step, it reduces all the rows to the smallest possible
 // by dividng each row with its own GCD
 const fundamentalStep = (questionData) => {
@@ -148,14 +150,13 @@ const firstStep = ({ latexArray, questionData }) => {
         let get_GCD_of_A11_and_A31 = findGCD(returnObject.questionData[0][0], returnObject.questionData[2][0]);
 
         // TEST ALL POSSIBILITIES AND RETURN IT FROM (R1 and R2)
-        if (get_GCD_of_A11_and_A21 !== 0) {
-            allPossibilities.push(doallPossibleCases(returnObject.questionData[0][0], returnObject.questionData[1][0]));
+        if (get_GCD_of_A11_and_A21 !== 1) {
+            levelOnePossibleCases(returnObject.questionData[0][0], returnObject.questionData[1][0]);
         }
         // TEST ALL POSSIBILITIES AND RETURN IT FROM (R1 and R3)
-        if (get_GCD_of_A11_and_A31 !== 0) {
-            allPossibilities.push(doallPossibleCases(returnObject.questionData[0][0], returnObject.questionData[2][0]));
+        if (get_GCD_of_A11_and_A31 !== 1) {
+            levelOnePossibleCases(returnObject.questionData[0][0], returnObject.questionData[2][0]);
         }
-
         return returnObject;
     }
 
