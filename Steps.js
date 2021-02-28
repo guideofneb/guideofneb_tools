@@ -1,5 +1,73 @@
 // import findGCDForFour from './shared_functions.js';
-import { findGCDForFour } from './shared_functions.js';
+import { OPERATIONTYPE, ROW } from './constants.js';
+import { findGCDForFour, findGCD } from './shared_functions.js';
+const doallPossibleCases = (toMakeOnePart, fromWhichToMakeOne) => {
+    let foundDividingFactor = {
+        value: null,
+        noOfVariables: null,
+        dealingRow: null,
+        operationType: null
+    }
+    let allDividingFactorsFound = [];
+    // R1 -> R1 + xR2   : noOfVariables = 1 (only x)
+    for (let i = 1; i <= 50; i++) {
+        let value = toMakeOnePart + (i * fromWhichToMakeOne);
+        if (value === 1) {
+            foundDividingFactor.value = [i];
+            foundDividingFactor.noOfVariables = 1;
+            foundDividingFactor.dealingRow = ROW.R2
+            foundDividingFactor.operationType = OPERATIONTYPE.ADD
+            allDividingFactorsFound.push(foundDividingFactor);
+            found = false;
+            break;
+        }
+    }
+    // R1 -> R1 - xR2   : noOfVariables = 1 (only x)
+    for (let i = 1; i <= 50; i++) {
+        let value = toMakeOnePart - (i * fromWhichToMakeOne);
+        if (value === 1) {
+            foundDividingFactor.value = [i];
+            foundDividingFactor.noOfVariables = 1;
+            foundDividingFactor.dealingRow = ROW.R2
+            foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
+            allDividingFactorsFound.push(foundDividingFactor);
+            break;
+        }
+
+    }
+    // R1 -> xR1 + yR2  : noOfVariables = 2 ( x and y)
+    loppFirst:
+    for (let i = 1; i <= 50; i++) {
+        for (let j = 1; j <= 50; j++) {
+            let value = (i * toMakeOnePart) + (j * fromWhichToMakeOne);
+            if (value === 1) {
+                foundDividingFactor.value = [i, j];
+                foundDividingFactor.noOfVariables = 2;
+                foundDividingFactor.dealingRow = ROW.R2
+                foundDividingFactor.operationType = OPERATIONTYPE.ADD
+                allDividingFactorsFound.push(foundDividingFactor);
+                break loopFirst;
+            }
+        }
+    }
+    // R1 -> xR1 - yR2 : noOfVariables = 2 ( x and y)
+    loopFirst:
+    for (let i = 1; i <= 50; i++) {
+        for (let j = 1; j <= 50; j++) {
+            let value = (i * toMakeOnePart) - (j * fromWhichToMakeOne);
+            if (value === 1) {
+                foundDividingFactor.value = [i, j];
+                foundDividingFactor.noOfVariables = 2;
+                foundDividingFactor.dealingRow = ROW.R2
+                foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
+                allDividingFactorsFound.push(foundDividingFactor);
+                break loopFirst;
+            }
+        }
+    }
+    return foundDividingFactor;
+}
+
 // Fundamental step is the starting step, it reduces all the rows to the smallest possible
 // by dividng each row with its own GCD
 const fundamentalStep = (questionData) => {
@@ -31,14 +99,37 @@ const fundamentalStep = (questionData) => {
     return returnObject;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // In the first step, we will try to make A11 as 1
 const firstStep = ({ latexArray, questionData }) => {
+
     let reason;
     let returnObject = {
         latexArray: latexArray,
         questionData: questionData
     };
-
     // If the A11 has -1 then it will be simply converted to 1 by multiplying with -1
     if (returnObject.questionData[0][0] === -1) {
         returnObject.questionData[0] = [returnObject.questionData[0][0] * (-1), returnObject.questionData[0][1] * (-1), returnObject.questionData[0][2] * (-1), returnObject.questionData[0][3] * (-1)];
@@ -51,12 +142,62 @@ const firstStep = ({ latexArray, questionData }) => {
     // If it's -1 then above if statement will run, else for every value that's not 1, we will make it 1 in the if
     // statement below
     if (returnObject.questionData[0][0] !== 1) {
-        // R1 -> R1 + xR2 or R1 -> R1 - xR2, here R1 is to be made 1
+        let allPossibilities = [];
+        // We'll find GCD with each row, coz if there is a GCD then we won't use that row
+        let get_GCD_of_A11_and_A21 = findGCD(returnObject.questionData[0][0], returnObject.questionData[1][0]);
+        let get_GCD_of_A11_and_A31 = findGCD(returnObject.questionData[0][0], returnObject.questionData[2][0]);
+
+        // TEST ALL POSSIBILITIES AND RETURN IT FROM (R1 and R2)
+        if (get_GCD_of_A11_and_A21 !== 0) {
+            allPossibilities.push(doallPossibleCases(returnObject.questionData[0][0], returnObject.questionData[1][0]));
+        }
+        // TEST ALL POSSIBILITIES AND RETURN IT FROM (R1 and R3)
+        if (get_GCD_of_A11_and_A31 !== 0) {
+            allPossibilities.push(doallPossibleCases(returnObject.questionData[0][0], returnObject.questionData[2][0]));
+        }
+
         return returnObject;
+    }
+
+    function noneOfTheAboveWorked() {
+
     }
     // If the A11 equals to 1 then, simply pass on the returnObject to another step
     return returnObject;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const secondStep = (returnObject) => {
     if (questionData[1][0] !== 0) {
@@ -70,7 +211,6 @@ const secondStep = (returnObject) => {
     // If the A11 equals to 1 then, simply pass on the returnObject to another step
     return returnObject;
 }
-
 const thirdStep = (returnObject) => {
     if (questionData[2][0] !== 0) {
         let reason = [];

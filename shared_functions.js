@@ -27,4 +27,4 @@ const findGCDForFour = (a, b, c, d) => {
 // and divide all the row terms using the GCD value
 
 
-export { findGCDForFour };
+export { findGCDForFour, findGCD };

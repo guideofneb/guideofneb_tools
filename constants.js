@@ -3,7 +3,10 @@ const ROW = {
     R2: 2,
     R3: 3,
 }
+const OPERATIONTYPE = {
+    ADD: 0,
+    SUBTRACT: 1,
+}
 
 
-
-export default ROW;
+export { ROW, OPERATIONTYPE };
