@@ -126,22 +126,25 @@ export const ZeroMaker = (toMakeZeroPart) => {
 }
 
 export const ZeroProductionLatexDataAndQuestionData = (operationType, value, toBe0Row, is1Row, questionData) => {
+    let zeroRowIndex = toBe0Row - 1
+    let isOneRowIndex = is1Row - 1;
+
     if (operationType === OPERATIONTYPE.ADD) {
-        questionData[1] = [
-            questionData[toBe0Row][0] + (value[0] * questionData[is1Row][0]),
-            questionData[toBe0Row][1] + (value[0] * questionData[is1Row][1]),
-            questionData[toBe0Row][2] + (value[0] * questionData[is1Row][2]),
-            questionData[toBe0Row][3] + (value[0] * questionData[is1Row][3]),
+        questionData[zeroRowIndex] = [
+            questionData[zeroRowIndex][0] + (value[0] * questionData[isOneRowIndex][0]),
+            questionData[zeroRowIndex][1] + (value[0] * questionData[isOneRowIndex][1]),
+            questionData[zeroRowIndex][2] + (value[0] * questionData[isOneRowIndex][2]),
+            questionData[zeroRowIndex][3] + (value[0] * questionData[isOneRowIndex][3]),
         ]
     } else {
-        questionData[1] = [
-            questionData[toBe0Row][0] - (value[0] * questionData[is1Row][0]),
-            questionData[toBe0Row][1] - (value[0] * questionData[is1Row][1]),
-            questionData[toBe0Row][2] - (value[0] * questionData[is1Row][2]),
-            questionData[toBe0Row][3] - (value[0] * questionData[is1Row][3]),
+        questionData[zeroRowIndex] = [
+            questionData[zeroRowIndex][0] - (value[0] * questionData[isOneRowIndex][0]),
+            questionData[zeroRowIndex][1] - (value[0] * questionData[isOneRowIndex][1]),
+            questionData[zeroRowIndex][2] - (value[0] * questionData[isOneRowIndex][2]),
+            questionData[zeroRowIndex][3] - (value[0] * questionData[isOneRowIndex][3]),
         ]
     }
-    let reason = String.raw`\small{{{\text{R}}_{\text{1}}\to {{\text{R}}_{\text{1}}} ${OPERATIONTYPE.ADD ? `+` : '-'} (${value[0]}){{\text{R}}_{\text{1}}}}`;
+    let reason = String.raw`\small{{{\text{R}}_{\text{${toBe0Row}}}\to {{\text{R}}_{\text{${toBe0Row}}}} ${OPERATIONTYPE.ADD ? `+` : '-'} (${value[0]}){{\text{R}}_{\text{${is1Row}}}}}`;
     let rowData = questionData;
     return [questionData, String.raw`\sim \text{ }\left| \text{ }\begin{matrix}${rowData[0][0]} & ${rowData[0][1]} & ${rowData[0][2]} \\${rowData[1][0]} & ${rowData[1][1]} & ${rowData[1][2]} \\${rowData[2][0]} & ${rowData[2][1]} & ${rowData[2][2]} \\ \end{matrix}\text{ }\begin{matrix}: \\: \\: \\ \end{matrix} \right.\text{ }\left. \begin{matrix}${rowData[0][3]} \\${rowData[1][3]} \\${rowData[2][3]} \\ \end{matrix}\text{ } \right|\text{ }` + reason];
 }

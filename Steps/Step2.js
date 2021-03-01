@@ -1,4 +1,4 @@
-import { ZeroMaker, OPERATIONTYPE, ROW, ZeroProductionLatexDataAndQuestionData } from '../Shared/Operations.js';
+import { ZeroMaker, ROW, ZeroProductionLatexDataAndQuestionData } from '../Shared/Operations.js';
 
 const secondStep = ({ latexArray, questionData }) => {
     let returnObject = {
