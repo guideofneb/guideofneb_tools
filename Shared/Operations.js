@@ -37,33 +37,25 @@ export const findGCDForFour = (a, b, c, d) => {
 }
 
 // -------------------------------- POSSIBLE CASES -------------------------------------------------------
+
+
 //--------------- Level-1 Posssible cases contain R(X) -> R(X) + x(R(Y)) -------------------
 // X = RowNumber and x = variableThatWillMakeOneOrZero
-export const levelOnePossibleCases = (toMakeOnePart, fromWhichToMakeOne, dealingROW) => {
-    for (let i = 1; i <= 250; i++) {
-        let value = toMakeOnePart + (i * fromWhichToMakeOne);
-
-        if (value === 1) {
-            foundDividingFactor.value = [i];
-            foundDividingFactor.noOfVariables = 1;
-            foundDividingFactor.dealingRow = dealingROW;
-            foundDividingFactor.operationType = OPERATIONTYPE.ADD
-
-            return [foundDividingFactor];
+export const levelOnePossibleCases = (toMakeOnePart, fromWhichToMake, dealingROW, toMake) => {
+    let value = (toMake - toMakeOnePart) / fromWhichToMake;
+    // Checks for -1
+    if (toMake === 1) {
+        if (value % 1 !== 0) {
+            value = ((-1) - toMakeOnePart) / fromWhichToMake;
         }
     }
-    // R1 -> R1 - xR2   : noOfVariables = 1 (only x)
-    for (let i = 1; i <= 250; i++) {
-        let value = toMakeOnePart - (i * fromWhichToMakeOne);
-        if (value === 1) {
-            foundDividingFactor.value = [i];
-            foundDividingFactor.noOfVariables = 1;
-            foundDividingFactor.dealingRow = dealingROW;
-            foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
-            return [foundDividingFactor];
-        }
-    }
-    return [];
+
+    foundDividingFactor.value = [value !== 0 ? Math.abs(value) : value];
+    foundDividingFactor.noOfVariables = 1;
+    foundDividingFactor.dealingRow = dealingROW;
+    foundDividingFactor.operationType = value > 0 ? OPERATIONTYPE.ADD : OPERATIONTYPE.SUBTRACT;
+
+    return [foundDividingFactor];
 }
 
 // ------------- Level-2 Posssible cases contain R(X) -> x(R(X)) + y(R(Y)) -------------------
@@ -93,33 +85,6 @@ export const levelTwoPossibleCases = (toMakeOnePart, fromWhichToMakeOne, dealing
                 foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
                 return [foundDividingFactor];
             }
-        }
-    }
-    return [];
-}
-
-
-
-export const ZeroMaker = (toMakeZeroPart) => {
-    for (let i = 1; i <= 250; i++) {
-        let value = toMakeZeroPart + i
-        if (value === 0) {
-            foundDividingFactor.value = [i];
-            foundDividingFactor.noOfVariables = 1;
-            foundDividingFactor.dealingRow = ROW.R1;
-            foundDividingFactor.operationType = OPERATIONTYPE.ADD;
-            return [foundDividingFactor];
-        }
-    }
-    // R1 -> R1 - xR2   : noOfVariables = 1 (only x)
-    for (let i = 1; i <= 250; i++) {
-        let value = toMakeZeroPart - i;
-        if (value === 0) {
-            foundDividingFactor.value = [i];
-            foundDividingFactor.noOfVariables = 1;
-            foundDividingFactor.dealingRow = ROW.R1;
-            foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
-            return [foundDividingFactor];
         }
     }
     return [];
