@@ -1,5 +1,5 @@
 // SOME CONSTANTS
-
+const totalColumns = [0, 1, 2, 3];
 export let foundDividingFactor = {
     value: null,
     noOfVariables: null,
@@ -127,6 +127,10 @@ export const ZeroProductionLatexDataAndQuestionData = (operationType, value, toB
 
 
 
+
+
+
+
 // In level-2 Possible Case, we try this type of method R1 -> xR1 + yR2 OR R1 -> xR1 - yR2
 // Inside this function, we'll try to provide you the value of x and y
 // -------------PARAMETERS------------------
@@ -158,4 +162,40 @@ export const levelThreePossibleCase = ({ left, dealingROW }) => {
     foundDividingFactor.dealingRow = dealingROW;
     foundDividingFactor.operationType = OPERATIONTYPE.MULT;
     return [foundDividingFactor];
+}
+
+export const OneProductionLatexDataAndQuestionData = ({ left, right, questionData, value, operationType, noOfVars }) => {
+    let reason;
+    let leftIndex = left - 1, rightIndex = right - 1;
+    if (noOfVars === 0) {
+        // If left === right it means R1 => R1 * (x) | (x can be either fraction or intenger)
+        if (operationType === OPERATIONTYPE.MULT) {
+            questionData[left - 1] = [questionData[left - 1][0] * value[0], questionData[left - 1][1] * value[0], questionData[left - 1][2] * value[0], questionData[left - 1][3] * value[0]];
+            reason = String.raw`\small{{{\text{R}}_{\text{${left - 1}}}}\to {{\text{R}}_{\text{${left - 1}}} \times (${value[0]})}}`;
+        }
+    } else if (noOfVars === 1) {
+        if (operationType === OPERATIONTYPE.ADD) {
+            for (let columnIndex in totalColumns) {
+                questionData[leftIndex][columnIndex] = returnObject.questionData[leftIndex][columnIndex] + (value[0] * returnObject.questionData[rightIndex][columnIndex]);
+            }
+        } else {
+            for (let columnIndex in totalColumns) {
+                questionData[leftIndex][columnIndex] = returnObject.questionData[leftIndex][columnIndex] - (value[0] * returnObject.questionData[rightIndex][columnIndex]);
+            }
+        }
+        reason = String.raw`\small{{{\text{R}}_{\text{1}}\to {{\text{R}}_{\text{1}}} ${OPERATIONTYPE.ADD ? `+` : '-'} (${value[0]}){{\text{R}}_{\text{${dealingRow}}}}}}`;
+
+    } else if (noOfVars === 2) {
+        if (operationType === OPERATIONTYPE.ADD) {
+            for (let columnIndex in totalColumns) {
+                questionData[leftIndex][columnIndex] = (value[0] * questionData[leftIndex][columnIndex]) + (value[1] * questionData[rightIndex][columnIndex]);
+            }
+        } else {
+            for (let columnIndex in totalColumns) {
+                returnObject.questionData[leftIndex][columnIndex] = (value[0] * returnObject.questionData[leftIndex][columnIndex]) - (value[1] * returnObject.questionData[rightIndex][columnIndex]);
+            }
+            reason = String.raw`\small{{{\text{R}}_{\text{1}}\to (${value[0]}){{\text{R}}_{\text{1}}}${OPERATIONTYPE.ADD ? `+` : '-'}(${value[1]}){{\text{R}}_{\text{${dealingRow - 1}}}}}}`;
+        }
+    }
+    return [questionData, noOfVars];
 }

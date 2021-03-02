@@ -1,5 +1,5 @@
 // Step 4 is about making the A22 = 1 and it's simple, we'll do only operations of R2 with R3
-import { ROW, levelOnePossibleCases, findGCD, levelTwoPossibleCase, levelThreePossibleCase } from '../Shared/Operations.js';
+import { ROW, levelOnePossibleCases, findGCD, levelTwoPossibleCase, levelThreePossibleCase, OneProductionLatexDataAndQuestionData } from '../Shared/Operations.js';
 import FundamentalStep from './FundamentalStep.js';
 const thirdStep = ({ latexArray, questionData }) => {
     // Fist we will reduce each array to its lowest possible 
@@ -20,15 +20,18 @@ const thirdStep = ({ latexArray, questionData }) => {
             if (secondPossibility.length !== 0) {
                 possibility = secondPossibility;
             } else {
-                let thidPossibility = levelThreePossibleCase({ left: questionData[1][1], dealingROW: ROW.R2 });
-                possibility = thidPossibility;
+                let thirdPossibility = levelThreePossibleCase({ left: questionData[1][1], dealingROW: ROW.R2 });
+                possibility = thirdPossibility;
             }
         }
-        // const [question_data, latex_data] = ZeroProductionLatexDataAndQuestionData(
-        //     possibility[0].operationType,
-        //     possibility[0].value, ROW.R3,
-        //     ROW.R1,
-        //     returnObject.questionData);
+        const [new_questionData, latex_data] = OneProductionLatexDataAndQuestionData({
+            left: ROW.R2,
+            right: possibility[0].dealingRow,
+            questionData: returnObject.questionData,
+            value: possibility[0].value,
+            operationType: possibility[0].operationType,
+            noOfVars: possibility[0].noOfVariables,
+        });
         // returnObject.latexArray.push(latex_data);
         // returnObject.questionData = question_data;
         console.log(possibility);
