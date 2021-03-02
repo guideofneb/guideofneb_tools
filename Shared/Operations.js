@@ -14,6 +14,7 @@ export const ROW = {
 export const OPERATIONTYPE = {
     ADD: 0,
     SUBTRACT: 1,
+    MULT: 2,
 }
 //  This function takes two numbers and finds the Greatest Common Divisor using the euclid algorithm
 // By GCD, we mean that it's the greatest number that can divide the given two numbers a and b 
@@ -133,7 +134,7 @@ export const ZeroProductionLatexDataAndQuestionData = (operationType, value, toB
 // #left => Left is the value in the left; incase of R1 -> xR1(R1 --> here is the left) + yR2
 // #right => Left is the value in the left; incase of R1 -> xR1 + yR2(R2 --> here is the right)
 // #dealingRow => dealingRow is the row in the right; incase of R1 -> xR1 + yR3 (R3 is the dealingROW)
-export const levelTwoPossibleCase = (toMake, left, right, dealingROW) => {
+export const levelTwoPossibleCase = ({ toMake, left, right, dealingROW }) => {
     let x = 1, y;
     y = toMake - left;
     x = right;
@@ -149,4 +150,12 @@ export const levelTwoPossibleCase = (toMake, left, right, dealingROW) => {
         return [foundDividingFactor];
     }
     return [];
+}
+
+export const levelThreePossibleCase = ({ left, dealingROW }) => {
+    foundDividingFactor.value = [1 / left];
+    foundDividingFactor.noOfVariables = 0;
+    foundDividingFactor.dealingRow = dealingROW;
+    foundDividingFactor.operationType = OPERATIONTYPE.MULT;
+    return [foundDividingFactor];
 }
