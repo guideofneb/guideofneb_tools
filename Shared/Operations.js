@@ -1,4 +1,5 @@
 // SOME CONSTANTS
+
 export let foundDividingFactor = {
     value: null,
     noOfVariables: null,
@@ -58,37 +59,40 @@ export const levelOnePossibleCases = (toMakeOnePart, fromWhichToMake, dealingROW
     return [foundDividingFactor];
 }
 
-// ------------- Level-2 Posssible cases contain R(X) -> x(R(X)) + y(R(Y)) -------------------
-// X = RowNumber and x = variableThatWillMakeOneOrZero
-export const levelTwoPossibleCases = (toMakeOnePart, fromWhichToMakeOne, dealingROW) => {
-    // R1 -> xR1 + yR2  : noOfVariables = 2 ( x and y)
-    for (let i = 1; i <= 50; i++) {
-        for (let j = 1; j <= 50; j++) {
-            let value = (i * toMakeOnePart) + (j * fromWhichToMakeOne);
-            if (value === 1) {
-                foundDividingFactor.value = [i, j];
-                foundDividingFactor.noOfVariables = 2;
-                foundDividingFactor.dealingRow = dealingROW
-                foundDividingFactor.operationType = OPERATIONTYPE.ADD
-                return [foundDividingFactor];
-            }
-        }
-    }
-    // R1 -> xR1 - yR2 : noOfVariables = 2 ( x and y)
-    for (let i = 1; i <= 50; i++) {
-        for (let j = 1; j <= 50; j++) {
-            let value = (i * toMakeOnePart) - (j * fromWhichToMakeOne);
-            if (value === 1) {
-                foundDividingFactor.value = [i, j];
-                foundDividingFactor.noOfVariables = 2;
-                foundDividingFactor.dealingRow = dealingROW
-                foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
-                return [foundDividingFactor];
-            }
-        }
-    }
-    return [];
+export const levelTwoPossibleCases = (left, right, toMake) => {
+
 }
+// // ------------- Level-2 Posssible cases contain R(X) -> x(R(X)) + y(R(Y)) -------------------
+// // X = RowNumber and x = variableThatWillMakeOneOrZero
+// export const levelTwoPossibleCases = (toMakeOnePart, fromWhichToMakeOne, dealingROW) => {
+//     // R1 -> xR1 + yR2  : noOfVariables = 2 ( x and y)
+//     for (let i = 1; i <= 50; i++) {
+//         for (let j = 1; j <= 50; j++) {
+//             let value = (i * toMakeOnePart) + (j * fromWhichToMakeOne);
+//             if (value === 1) {
+//                 foundDividingFactor.value = [i, j];
+//                 foundDividingFactor.noOfVariables = 2;
+//                 foundDividingFactor.dealingRow = dealingROW
+//                 foundDividingFactor.operationType = OPERATIONTYPE.ADD
+//                 return [foundDividingFactor];
+//             }
+//         }
+//     }
+//     // R1 -> xR1 - yR2 : noOfVariables = 2 ( x and y)
+//     for (let i = 1; i <= 50; i++) {
+//         for (let j = 1; j <= 50; j++) {
+//             let value = (i * toMakeOnePart) - (j * fromWhichToMakeOne);
+//             if (value === 1) {
+//                 foundDividingFactor.value = [i, j];
+//                 foundDividingFactor.noOfVariables = 2;
+//                 foundDividingFactor.dealingRow = dealingROW
+//                 foundDividingFactor.operationType = OPERATIONTYPE.SUBTRACT
+//                 return [foundDividingFactor];
+//             }
+//         }
+//     }
+//     return [];
+// }
 
 export const ZeroProductionLatexDataAndQuestionData = (operationType, value, toBe0Row, is1Row, questionData) => {
     let zeroRowIndex = toBe0Row - 1
@@ -113,7 +117,36 @@ export const ZeroProductionLatexDataAndQuestionData = (operationType, value, toB
     let rowData = questionData;
     return [questionData, String.raw`\sim \text{ }\left| \text{ }\begin{matrix}${rowData[0][0]} & ${rowData[0][1]} & ${rowData[0][2]} \\${rowData[1][0]} & ${rowData[1][1]} & ${rowData[1][2]} \\${rowData[2][0]} & ${rowData[2][1]} & ${rowData[2][2]} \\ \end{matrix}\text{ }\begin{matrix}: \\: \\: \\ \end{matrix} \right.\text{ }\left. \begin{matrix}${rowData[0][3]} \\${rowData[1][3]} \\${rowData[2][3]} \\ \end{matrix}\text{ } \right|\text{ }` + reason];
 }
+
+
 // This function will reduce the given row to the lowest possible row by finding th GCD using findGCDForFour
 // and divide all the row terms using the GCD value
 
 
+
+
+
+// In level-2 Possible Case, we try this type of method R1 -> xR1 + yR2 OR R1 -> xR1 - yR2
+// Inside this function, we'll try to provide you the value of x and y
+// -------------PARAMETERS------------------
+// #toMake => What you want to make (0,1 or -1); incase of R1(R1 --> Here in this region) -> xR2 + yR2;
+// #left => Left is the value in the left; incase of R1 -> xR1(R1 --> here is the left) + yR2
+// #right => Left is the value in the left; incase of R1 -> xR1 + yR2(R2 --> here is the right)
+// #dealingRow => dealingRow is the row in the right; incase of R1 -> xR1 + yR3 (R3 is the dealingROW)
+export const levelTwoPossibleCase = (toMake, left, right, dealingROW) => {
+    let x = 1, y;
+    y = toMake - left;
+    x = right;
+    let gcd = findGCD(x, y);
+    y = y / gcd;
+    x = x / gcd;
+    let isItCorrect = (x * left) + (y * right) === toMake;
+    if (isItCorrect) {
+        foundDividingFactor.value = [Math.abs(x), Math, abs(y)];
+        foundDividingFactor.noOfVariables = 2;
+        foundDividingFactor.dealingRow = dealingROW;
+        foundDividingFactor.operationType = y < 0 ? OPERATIONTYPE.SUBTRACT : OPERATIONTYPE.ADD;
+        return [foundDividingFactor];
+    }
+    return [];
+}
