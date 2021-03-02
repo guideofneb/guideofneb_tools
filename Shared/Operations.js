@@ -170,20 +170,22 @@ export const OneProductionLatexDataAndQuestionData = ({ left, right, questionDat
     if (noOfVars === 0) {
         // If left === right it means R1 => R1 * (x) | (x can be either fraction or intenger)
         if (operationType === OPERATIONTYPE.MULT) {
-            questionData[left - 1] = [questionData[left - 1][0] * value[0], questionData[left - 1][1] * value[0], questionData[left - 1][2] * value[0], questionData[left - 1][3] * value[0]];
+            for (let columnIndex in totalColumns) {
+                questionData[leftIndex][columnIndex] = questionData[leftIndex][columnIndex] * value[0];
+            }
             reason = String.raw`\small{{{\text{R}}_{\text{${left - 1}}}}\to {{\text{R}}_{\text{${left - 1}}} \times (${value[0]})}}`;
         }
     } else if (noOfVars === 1) {
         if (operationType === OPERATIONTYPE.ADD) {
             for (let columnIndex in totalColumns) {
-                questionData[leftIndex][columnIndex] = returnObject.questionData[leftIndex][columnIndex] + (value[0] * returnObject.questionData[rightIndex][columnIndex]);
+                questionData[leftIndex][columnIndex] = questionData[leftIndex][columnIndex] + (value[0] * questionData[rightIndex][columnIndex]);
             }
         } else {
             for (let columnIndex in totalColumns) {
-                questionData[leftIndex][columnIndex] = returnObject.questionData[leftIndex][columnIndex] - (value[0] * returnObject.questionData[rightIndex][columnIndex]);
+                questionData[leftIndex][columnIndex] = questionData[leftIndex][columnIndex] - (value[0] * questionData[rightIndex][columnIndex]);
             }
         }
-        reason = String.raw`\small{{{\text{R}}_{\text{1}}\to {{\text{R}}_{\text{1}}} ${OPERATIONTYPE.ADD ? `+` : '-'} (${value[0]}){{\text{R}}_{\text{${dealingRow}}}}}}`;
+        reason = String.raw`\small{{{\text{R}}_{\text{${left}}}\to {{\text{R}}_{\text{${left}}}} ${OPERATIONTYPE.ADD ? `+` : '-'} (${value[0]}){{\text{R}}_{\text{${right}}}}}}`;
 
     } else if (noOfVars === 2) {
         if (operationType === OPERATIONTYPE.ADD) {
@@ -197,5 +199,5 @@ export const OneProductionLatexDataAndQuestionData = ({ left, right, questionDat
             reason = String.raw`\small{{{\text{R}}_{\text{1}}\to (${value[0]}){{\text{R}}_{\text{1}}}${OPERATIONTYPE.ADD ? `+` : '-'}(${value[1]}){{\text{R}}_{\text{${dealingRow - 1}}}}}}`;
         }
     }
-    return [questionData, noOfVars];
+    return [questionData, String.raw`\sim \text{ }\left| \text{ }\begin{matrix}${questionData[0][0]} & ${questionData[0][1]} & ${questionData[0][2]} \\${questionData[1][0]} & ${questionData[1][1]} & ${questionData[1][2]} \\${questionData[2][0]} & ${questionData[2][1]} & ${questionData[2][2]} \\ \end{matrix}\text{ }\begin{matrix}: \\: \\: \\ \end{matrix} \right.\text{ }\left. \begin{matrix}${questionData[0][3]} \\${questionData[1][3]} \\${questionData[2][3]} \\ \end{matrix}\text{ } \right|\text{ }` + reason];
 }

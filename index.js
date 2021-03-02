@@ -9,24 +9,7 @@ import Fraction from 'fraction.js'
 let questionData = [[1, 2, -2, 0], [3, 2, -1, 1], [2, 1, -3, -1]];
 const solve = (questionData) => {
 
-    function secondPoss({ toMake, leftRowData, rightRowData }) {
-        // R1 -> xR1 + (+-yR2)
-        // Initially to find x and y, let x = 1
-        let x = 1, y, GCD;
-        y = toMake - (x * leftRowData);
-        x = rightRowData;
-        GCD = findGCD(x, y);
-        y = y / GCD;
-        x = x / GCD;
-        // The above are the values of x and y
-        return [x, y]
-    }
+    console.log(Step4(Step3(Step2(Step1(fundamentalStep(questionData))))));
 
-
-    console.log(secondPoss({ leftRowData: 3, rightRowData: 7, toMake: 1 }))
-    // console.log(Step4(Step3(Step2(Step1(fundamentalStep(questionData))))));
-    // var x = new Fraction(1.12670689108);
-    // var res = x.toFraction(false);
-    // console.log(res);
 }
 solve(questionData)
