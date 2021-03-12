@@ -47,3 +47,33 @@ export const twoVariableOperation = (toMake: number, left: number, right: number
     }
     return [0, 0];
 }
+
+export const twoVariableOperationRowOperation = (twoVariables: [number, number], leftRow: ROW, rightRow: ROW, questionData: number[][]): RowOperationData => {
+    /*
+     ***** Header Templates *****
+     [For addition and suubtraction]
+     First one => where x is 1 and y is non 1
+     Second one => where x is non 1 and y is 1
+     Third one => where both x and y are 1
+     Fourth one => where both x and y are non 1
+     */
+    let headerTemplates_SUBTRACTION = [
+        String.raw`\text{Multipyling }\text{R}_{\text{#[R1]#}}\text{ by #[Y]# and sutracting it from }\text{R}_{\text{#[R0]#}}`,
+        String.raw`\text{Multipyling }\text{R}_{\text{#[R0]#}}\text{ by #[Y]# and sutracting }\text{R}_{\text{#[R1]#}}\text{ from it}`,
+        String.raw`\text{Subtracting }\text{R}_{\text{#[R1]#}}\text{ from #[Y]# }\text{R}_{\text{#[R0]#}}\text{we get,}`,
+        String.raw`\text{Mutliplying }\text{R}_{\text{#[R0]#}}\text{ and }\text{R}_{\text{#[R1]#}}\text{by #[X]# and #[Y]# respectively and subtracting }\text{R}_{\text{#[R1]#}} by \text{R}_{\text{#[R0]#}}\text{ we get,}`,
+    ];
+    let headerTemplates_ADDITION = [
+        String.raw`\text{Multipyling }\text{R}_{\text{#[R1]#}}\text{ by #[Y]# and adding it with }\text{R}_{\text{#[R0]#}}\text{we get,}`,
+        String.raw`\text{Multipyling }\text{R}_{\text{#[R0]#}}\text{ by #[X]# and adding it with }\text{R}_{\text{#[R1]#}}\text{ we get,}`,
+        String.raw`\text{Adding }\text{R}_{\text{#[R1]#}}\text{ and }\text{R}_{\text{#[R0]#}}\text{we get,}`,
+        String.raw`\text{Mutliplying }\text{R}_{\text{#[R0]#}}\text{ and }\text{R}_{\text{#[R1]#}}\text{by #[X]# and #[Y]# respectively and adding }\text{R}_{\text{#[R1]#}} and \text{R}_{\text{#[R0]#}}\text{ we get,}`,
+    ];
+    // Storing the left and right as x and y
+    // in R(m) -> xR(m) + yR(n)
+    let [x, y] = twoVariables;
+    for (let i = 0; i <= 3; i++) {
+        questionData[leftRow - 1][i] = (x) * (questionData[leftRow - 1][i]) + (y) * (questionData[rightRow - 1][i]);
+    }
+    return new RowOperationData("",)
+}
