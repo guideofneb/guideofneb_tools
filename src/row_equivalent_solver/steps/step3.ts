@@ -5,13 +5,14 @@ Step 3 is about making A13 as 0; which is done by subtracting A13 by x times of 
 */
 
 import { LatexAndQuestionData, ROW } from '../shared/constants';
-import { twoVariableOperation, twoVariableOperationRowOperation } from '../shared/operations';
+import { makeZero } from '../shared/make_zero';
 const Step3 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
     let questionData = input_data.questionData;
-    const [xR3, yR1] = twoVariableOperation(0, questionData[2][0], 1);
-    let rowoperationdata = twoVariableOperationRowOperation([xR3, yR1], ROW.R3, ROW.R1, questionData);
-    input_data.latex_array.push(rowoperationdata);
-    input_data.questionData = rowoperationdata.mutated_row;
+    if (questionData[2][0] !== 0) {
+        let rowoperationdata = makeZero(ROW.R3, ROW.R1, questionData, questionData[2][0]);
+        input_data.latex_array.push(rowoperationdata);
+        input_data.questionData = rowoperationdata.mutated_row;
+    }
     return input_data;
 }
 export default Step3;
