@@ -27,8 +27,7 @@ const Step0 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
     for (let row = 1; row <= 3; row++) {
 
         // finding the gcd for all the colums of a row
-        let gcd = findGCDforFour(questionData[row - 1][0], questionData[row - 1][1], questionData[row - 1][1], questionData[row - 1][1]);
-
+        let gcd = findGCDforFour(questionData[row - 1][0], questionData[row - 1][1], questionData[row - 1][2], questionData[row - 1][3]);
         // this basically means like if gcd exists(exists implicity means that it's useful enough to divide the columns of the row);
         if (gcd != 0 && gcd > 1) {
             questionData[row - 1] = [
