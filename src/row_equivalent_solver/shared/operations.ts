@@ -31,7 +31,7 @@ export const negOnetoPosOne = (questionData: number[][], row: ROW): RowOperation
 export const oneByDividingWithItself = (questionData: number[][], row: ROW): RowOperationData => {
     let dividingValue = questionData[row - 1][row - 1];
     for (let i = 0; i <= 3; i++) {
-        questionData[row - 1][i] /= questionData[row - 1][i];
+        questionData[row - 1][i] /= dividingValue;
     }
     return new RowOperationData(
         String.raw`\text{Dividing }{{\text{R}}_{\text{${row}}}}\text{ by ${dividingValue} we get}`,

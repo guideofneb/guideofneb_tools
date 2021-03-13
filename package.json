@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "test"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "jest-cli": "^26.6.3"
+  "dependencies": {
+    "fraction.js": "^4.0.13"
   }
 }
