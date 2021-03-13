@@ -1,3 +1,9 @@
+/*
+
+Step 3 is about making A13 as 0; which is done by subtracting A13 by x times of A11
+
+*/
+
 import { LatexAndQuestionData, ROW } from '../shared/constants';
 import { twoVariableOperation, twoVariableOperationRowOperation } from '../shared/operations';
 const Step3 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
