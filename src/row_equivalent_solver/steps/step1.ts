@@ -35,7 +35,6 @@ const Step0 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
                 } else {
                     ;
                     if (conditionR1R2) {
-
                         rowoperationdata = twoVariableOperationRowOperation([Xrow1, Yrow2], ROW.R1, ROW.R2, questionData);
                     } else if (conditionR1R3) {
                         rowoperationdata = twoVariableOperationRowOperation([X1row1, Y1row3], ROW.R1, ROW.R3, questionData);
@@ -46,7 +45,9 @@ const Step0 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
                 input_data.latex_array.push(rowoperationdata);
                 input_data.questionData = rowoperationdata.mutated_row;
             } else {
-                input_data.latex_array.push(oneByDividingWithItself(questionData, ROW.R1));
+                let rowoperationdata = oneByDividingWithItself(questionData, ROW.R1);
+                input_data.latex_array.push(rowoperationdata);
+                input_data.questionData = rowoperationdata.mutated_row;
             }
         }
     }
