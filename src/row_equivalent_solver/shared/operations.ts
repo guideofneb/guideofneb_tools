@@ -29,10 +29,14 @@ export const negOnetoPosOne = (questionData: number[][], row: ROW): RowOperation
 }
 
 export const oneByDividingWithItself = (questionData: number[][], row: ROW): RowOperationData => {
+    let dividingValue = questionData[row - 1][row - 1];
     for (let i = 0; i <= 3; i++) {
         questionData[row - 1][i] /= questionData[row - 1][i];
     }
-    return new RowOperationData("", questionData, "");
+    return new RowOperationData(
+        String.raw`\text{Dividing }{{\text{R}}_{\text{${row}}}}\text{ by ${dividingValue} we get}`,
+        questionData,
+        String.raw`{{\text{R}}_{\text{${row}}}}\to\dfrac{{{\text{R}}_{\text{${row}}}}}{${dividingValue}}`);
 }
 
 /* It takes a row(considered as left row) and does two variable operation with another row(right row)
@@ -44,7 +48,7 @@ export const twoVariableOperation = (toMake: number, left: number, right: number
     // then we'll find the 	
     let y = toMake - left
     let x = right;
-    let gcd = findGCD(left, right);
+    let gcd = findGCD(x, y);
     x /= gcd;
     y /= gcd;
     let isitCorrect = ((x * left) + (y * right)) === toMake;
