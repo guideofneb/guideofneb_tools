@@ -5,7 +5,6 @@ export enum ROW {
     R2 = 2,
     R3 = 3,
 }
-
 /* It is the class whose instance is returned after completion of every 
 step "process" from step 0 to step 9 */
 export class RowOperationData {

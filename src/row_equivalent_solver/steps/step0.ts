@@ -1,4 +1,5 @@
-import { RowOperationData, findGCDforFour, LatexAndQuestionData, ROW } from '../shared/constants';
+import { RowOperationData, LatexAndQuestionData, ROW } from '../shared/constants';
+import { findGCDforFour } from '../shared/operations'
 /* Step 0 is all about reducing the rows to the lowest possible value
  by dividing each row with their own GCD (Greatest Common Divisor) */
 
@@ -80,6 +81,7 @@ const Step0 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
         let rowOperationData = new RowOperationData(header, questionData, combinedReason);
         input_data.latex_array.push(rowOperationData);
     }
+    console.log(input_data);
     return input_data;
 }
 export default Step0;

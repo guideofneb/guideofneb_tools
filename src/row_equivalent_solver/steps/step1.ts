@@ -21,23 +21,24 @@ const Step0 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
             const [Xrow1, Yrow2] = twoVariableOperation(1, questionData[0][0], questionData[1][0]);
             // Get tuple of x and y from operation of R1 with R2 and store as X1row1 and Y1row2 respectively            
             const [X1row1, Y1row3] = twoVariableOperation(1, questionData[0][0], questionData[2][0]);
+            console.log(Xrow1, Yrow2, X1row1, Y1row3);
+
             if (Xrow1 !== 0 && Yrow2 !== 0 && X1row1 !== 0 && Y1row3 !== 0) {
                 // if true then use R1 and R2 operation else use R2 and R3 operation
-                if ((Xrow1 + Yrow2) < (X1row1 + Y1row3)) {
-                    let rowoperationdata = twoVariableOperationRowOperation([Xrow1, Yrow2], ROW.R1, ROW.R2, questionData);
-                    input_data.latex_array.push(rowoperationdata);
-                    input_data.questionData = rowoperationdata.mutated_row;
+                let rowoperationdata: RowOperationData;
+                if ((Math.abs(Xrow1) === 1 || Math.abs(Yrow2) === 1) && (Math.abs(Xrow1) % 1 === 0 && Math.abs(Yrow2) % 1 === 0)) {
+                    rowoperationdata = twoVariableOperationRowOperation([Xrow1, Yrow2], ROW.R1, ROW.R2, questionData);
+                } else if ((Math.abs(X1row1) === 1 || Math.abs(Y1row3) === 1) && (Math.abs(X1row1) % 1 === 0 && Math.abs(Y1row3) % 1 === 0)) {
+                    rowoperationdata = twoVariableOperationRowOperation([X1row1, Y1row3], ROW.R1, ROW.R3, questionData);
                 } else {
-                    let rowoperationdata = twoVariableOperationRowOperation([X1row1, Y1row3], ROW.R1, ROW.R3, questionData);
-                    input_data.latex_array.push(rowoperationdata); a
-                    input_data.questionData = rowoperationdata.mutated_row;
+                    rowoperationdata = twoVariableOperationRowOperation([X1row1, Y1row3], ROW.R1, 10, questionData);
                 }
-
-
+                input_data.latex_array.push(rowoperationdata);
+                input_data.questionData = rowoperationdata.mutated_row;
             }
         }
     }
-    console.log(input_data);
+    console.log(input_data.latex_array);
     return input_data;
 }
 export default Step0;

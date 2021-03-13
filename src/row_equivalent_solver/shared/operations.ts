@@ -28,6 +28,12 @@ export const negOnetoPosOne = (questionData: number[][], row: ROW): RowOperation
         String.raw`\small{{{\text{R}}_{\text{${row}}}}\to {{\text{R}}_{\text{${row}}}}\times(-1)}`);
 }
 
+export const oneByDividingWithItself = (questionData: number[][], row: ROW): RowOperationData => {
+    for (let i = 0; i <= 3; i++) {
+        questionData[row - 1][i] /= questionData[row - 1][i];
+    }
+    return new RowOperationData("", questionData, "");
+}
 
 /* It takes a row(considered as left row) and does two variable operation with another row(right row)
 Eg. R1(it is the toMake) -> x(R1) + y(R2) 
@@ -57,10 +63,10 @@ export const twoVariableOperationRowOperation = (twoVariables: [number, number],
      Third one => where both x and y are 1
      Fourth one => where both x and y are non 1
      */
+    let header: string;
+    let reason: string;
     let headerTemplates_SUBTRACTION = [
         String.raw`\text{Multipyling }\text{R}_{\text{#[R1]#}}\text{ by #[Y]# and sutracting it from }\text{R}_{\text{#[R0]#}}`,
-        String.raw`\text{Multipyling }\text{R}_{\text{#[R0]#}}\text{ by #[Y]# and sutracting }\text{R}_{\text{#[R1]#}}\text{ from it}`,
-        String.raw`\text{Subtracting }\text{R}_{\text{#[R1]#}}\text{ from #[Y]# }\text{R}_{\text{#[R0]#}}\text{we get,}`,
         String.raw`\text{Mutliplying }\text{R}_{\text{#[R0]#}}\text{ and }\text{R}_{\text{#[R1]#}}\text{by #[X]# and #[Y]# respectively and subtracting }\text{R}_{\text{#[R1]#}} by \text{R}_{\text{#[R0]#}}\text{ we get,}`,
     ];
     let headerTemplates_ADDITION = [
@@ -75,5 +81,25 @@ export const twoVariableOperationRowOperation = (twoVariables: [number, number],
     for (let i = 0; i <= 3; i++) {
         questionData[leftRow - 1][i] = (x) * (questionData[leftRow - 1][i]) + (y) * (questionData[rightRow - 1][i]);
     }
-    return new RowOperationData("",)
+    // ***** Finding header *****
+    if (x === 1 && y !== 1) { // First one => Where x is 1 and y is non 1
+        if (y < 0) { // When y is negative , use subtraction template 
+            header = headerTemplates_SUBTRACTION[0];
+        } else { // and if not then use the addition template
+            header = headerTemplates_ADDITION[0];
+        }
+    } else if (x !== 1 && y === 1) { // Second one => Where x is non 1 and y is 1
+        header = headerTemplates_ADDITION[1];
+    } else if (x === 1 && y === 1) { // Third one => Where x is 1 and y is 1
+        header = headerTemplates_ADDITION[2];
+    } else { // Fourth one => Where x is non 1 and y is also non 1
+        if (y < 0) {
+            header = headerTemplates_SUBTRACTION[1];
+        } else {
+            header = headerTemplates_ADDITION[3];
+        }
+    }
+    reason = x !== 1 ? String.raw`\text{(${x})}` : "" + String.raw`\text{R}_{\text{${leftRow}}} ${y < 0 ? "-" : "+"}` + (y !== 1 ? String.raw`\text{(${Math.abs(y)})}` : "") + String.raw`\text{R}_{\text{${rightRow}}}`;
+    header = header.replace("#[R1]#", `${rightRow}`).replace("#[R0]#", `${leftRow}`).replace("#[Y]#", `${y}`).replace("#[X]#", `${x}`);
+    return new RowOperationData(header, questionData, reason);
 }
