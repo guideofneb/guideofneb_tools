@@ -1,8 +1,8 @@
 
 // Step 0 is all about reducing the rows to the lowest possible value
 // by dividing each row with their own GCD(Greatest Common Divisor)
-import { RowOperationData, LatexAndQuestionData, ROW, } from '../shared/constants';
-import { negOnetoPosOne, twoVariableOperation, twoVariableOperationRowOperation, oneByDividingWithItself } from '../shared/operations';
+import { RowOperationData, LatexAndQuestionData, ROW, } from '../shared/constants.ts';
+import { negOnetoPosOne, twoVariableOperation, twoVariableOperationRowOperation, oneByDividingWithItself } from '../shared/operations.ts';
 const Step0 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
     // creates a new array from arrays of question data
     let questionData = [...input_data.questionData];

@@ -4,8 +4,8 @@ Step 3 is about making A13 as 0; which is done by subtracting A13 by x times of 
 
 */
 
-import { LatexAndQuestionData, ROW } from '../shared/constants';
-import { twoVariableOperation, twoVariableOperationRowOperation } from '../shared/operations';
+import { LatexAndQuestionData, ROW } from '../shared/constants.ts';
+import { twoVariableOperation, twoVariableOperationRowOperation } from '../shared/operations.ts';
 const Step5 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
     let questionData = input_data.questionData;
     const [xR3, yR2] = twoVariableOperation(0, questionData[2][1], 1);

@@ -1,5 +1,5 @@
-import { RowOperationData, LatexAndQuestionData, ROW } from '../shared/constants';
-import { findGCDforFour } from '../shared/operations'
+import { RowOperationData, LatexAndQuestionData, ROW } from '../shared/constants.ts';
+import { findGCDforFour } from '../shared/operations.ts'
 /* Step 0 is all about reducing the rows to the lowest possible value
  by dividing each row with their own GCD (Greatest Common Divisor) */
 

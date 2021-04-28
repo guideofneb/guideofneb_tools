@@ -1,4 +1,4 @@
-import { ROW, RowOperationData } from './constants';
+import { ROW, RowOperationData } from './constants.ts';
 
 
 export const makeZero = (leftROW: ROW, rightROW: ROW, questionData: number[][], fromValue: number): RowOperationData => {

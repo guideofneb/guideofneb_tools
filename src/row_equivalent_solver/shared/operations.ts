@@ -1,4 +1,4 @@
-import { ROW, RowOperationData } from './constants';
+import { ROW, RowOperationData } from './constants.ts';
 /* It lets you to find the GCD of two numbers, 
  Eg , if a = 20, c = 40 then findGCD(a,b) = 10 
  because 10 is the greatest number that can divide 'a' and 'b'  */

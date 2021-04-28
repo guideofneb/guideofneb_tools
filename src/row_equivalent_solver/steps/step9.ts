@@ -4,8 +4,8 @@ Step 3 is about making A13 as 0; which is done by subtracting A13 by x times of 
 
 */
 
-import { LatexAndQuestionData, ROW } from '../shared/constants';
-import { makeZero } from '../shared/make_zero';
+import { LatexAndQuestionData, ROW } from '../shared/constants.ts';
+import { makeZero } from '../shared/make_zero.ts';
 const Step9 = (input_data: LatexAndQuestionData): LatexAndQuestionData => {
     let questionData = input_data.questionData;
     if (questionData[0][2] !== 0) {
