@@ -18,13 +18,14 @@ const gaussSiedelQuestion = new GaussSiedelQuestionParser(
   "20x=50"
 );
 export const gauss_siedel_solve = (question) => {
-const allVariables = grabAllVariables(gaussSiedelQuestion);
-    let step1Latex = ""
+  const allVariables = grabAllVariables(gaussSiedelQuestion);
+  let step1Latex = String.raw`\begin{aligned} &\text{Let the given equations be, }\\[3pt] &\begin{aligned}`;
   const step1Result = STEP1(question, allVariables);
-    step1Result.map((d)=>{
-        step1Latex += d.latex;
-    })
-    return step1Latex;
+  step1Result.map((d) => {
+    step1Latex += d.latex;
+  })
+  step1Latex += String.raw`\end{aligned} \\\end{aligned`;
+  return step1Latex;
 };
 
 console.log(gauss_siedel_solve(gaussSiedelQuestion));
