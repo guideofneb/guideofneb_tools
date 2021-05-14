@@ -12,10 +12,11 @@ const gaussSiedelQuestion = new GaussSiedelQuestionParser(
 )
 Takes three Raw String of equations and converts it to parsed Equation
  */
+
 const gaussSiedelQuestion = new GaussSiedelQuestionParser(
-  "-10+2x+10z=30",
-  "-x+10y+z=10",
-  "20x=50"
+  "-10x=30-2z",
+  "-10y=10",
+  "+20z=50-2343"
 );
 export const gauss_siedel_solve = (question) => {
   const allVariables = grabAllVariables(gaussSiedelQuestion);

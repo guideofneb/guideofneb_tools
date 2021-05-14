@@ -59,6 +59,7 @@ const STEP1 = (question, _allVars) => {
     //Increment the equationNo so that it can be passed into EquationProcessLatex function and it can label the equation
     equationNo++;
   }
+    
 
   /*
    * Align Step1LatexArrayLeftVarsAndRightConst in diagonal dominant form
@@ -105,8 +106,20 @@ const STEP1 = (question, _allVars) => {
     // Change the order of "Step1LatexArrayLeftVarsAndRightConst" such that diagonally dominant form is present from the index of the elements in
     // the array "dominantArray"
     Step1LatexArrayLeftVarsAndRightConst = dominantArray.map(
-      (equationIndex) => {
-       return Step1LatexArrayLeftVarsAndRightConst[equationIndex];
+      (equationIndex,index) => {
+        //Fixing the equationNumbering
+        const tobeReturnedLatexAndVarArray = Step1LatexArrayLeftVarsAndRightConst[equationIndex];
+        const _equationNo  = index + 1;
+        const equationNum =
+        _equationNo === 1
+        ? `i`
+        : _equationNo === 2
+        ? `ii`
+        : _equationNo === 3
+        ? `iii`
+        : ``;
+        tobeReturnedLatexAndVarArray.latex = tobeReturnedLatexAndVarArray.latex.replace(/\([i]{3}\)/,String.raw`(${equationNum})`)
+       return tobeReturnedLatexAndVarArray;
       }
     );
   } else {
