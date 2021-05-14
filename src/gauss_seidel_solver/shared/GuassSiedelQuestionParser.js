@@ -1,4 +1,4 @@
-import {makeItStandard} from './OneDegreeEquationStandardizer/oneDegreeEquationStandardizer.min.js';
+import {makeItStandard} from '../OneDegreeEquationStandardizer/oneDegreeEquationStandardizer.min.js';
 class ParsedEquation{
     parsedEq;
     constructor(rawEqn){

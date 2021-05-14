@@ -1,5 +1,5 @@
-import addMissingVars from "../addMissingVars.js";
-import EquationProcessLatex from "../equationProcessLatex.js";
+import addMissingVars from "../shared/addMissingVars.js";
+import EquationProcessLatex from "../shared/equationProcessLatex.js";
 // Step1 basically takes two things,
 // 1 => It takes the question which is parsed using gauss siedel parser and it contains
 // the equation solved in latex form and leftvars and right constant (question)
