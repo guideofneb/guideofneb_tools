@@ -47,10 +47,10 @@ const STEP1 = (question, _allVars) => {
 
     //FinalVars and RightConstant data and latex of the equation processed passed
     Step1LatexArrayLeftVarsAndRightConst.push({
-      latex: String.raw`&\begin{aligned}${EquationProcessLatex(
+      latex: String.raw`${EquationProcessLatex(
         EquationStepsLatex,
         equationNo
-      )}\end{aligned}\\`,
+      )}`,
       leftVarAndRightConst: {
         leftVars: finalizedVars,
         rightConstant: question[eq].parsedEq.rightConstant,

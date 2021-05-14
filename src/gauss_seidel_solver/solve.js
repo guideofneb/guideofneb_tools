@@ -14,7 +14,7 @@ Takes three Raw String of equations and converts it to parsed Equation
  */
 const gaussSiedelQuestion = new GaussSiedelQuestionParser(
   "-10+2x+10z=30",
-  "x+10y+z=10",
+  "-x+10y+z=10",
   "20x=50"
 );
 export const gauss_siedel_solve = (question) => {
@@ -24,7 +24,7 @@ export const gauss_siedel_solve = (question) => {
   step1Result.map((d) => {
     step1Latex += d.latex;
   })
-  step1Latex += String.raw`\end{aligned} \\\end{aligned`;
+  step1Latex += String.raw`\end{aligned}\\ \end{aligned}`;
   return step1Latex;
 };
 
