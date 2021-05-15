@@ -1,32 +1,56 @@
 import { GaussSiedelQuestionParser } from "./shared/GuassSiedelQuestionParser.js";
 import grabAllVariables from "./shared/grabAllVariables.js";
 import STEP1 from "./steps/step1.js";
+import STEP2 from "./steps/step2.js";
 
-/*
-Example of Guass Siedel Question that needs to be passed i.e object of GaussSiedelQuestionParser should be passed inside gauss_siedel_solve
-and rawstring of three equations should be passied inside GaussSiedelQuestionParser
-const gaussSiedelQuestion = new GaussSiedelQuestionParser(
-  "10z+2y=30",
-  "x+5y+z=10",
-  "20x=50"
-)
-Takes three Raw String of equations and converts it to parsed Equation
- */
+// It takes question in raw form
+// Eg. gauss_siedel_solve(""2x+10y=-19","10z+2y+x=5","30x+10y+z=-1")
+// It will return a raw string of latex that is the solved solution with process
+export const gauss_siedel_solve = (equation1, equation2, equation3) => {
+  //Converts the raw equations into parsed Equation
+  const parsedGuassSiedelQuestion = new GaussSiedelQuestionParser(
+    equation1,
+    equation2,
+    equation3
+  );
+  //Extracts all the unique variables from 3 equations
+  const allVariables = grabAllVariables(parsedGuassSiedelQuestion);
+  //Beginning phase of the final latex
+  let finalLatex = String.raw`
+    \begin{aligned}
+    &\text{Let the given equations be, }\\[3pt] 
+    &\begin{aligned}
+    `;
 
-const gaussSiedelQuestion = new GaussSiedelQuestionParser(
-  "-10x=30-2z",
-  "-10y=10",
-  "+20z=50-2343"
-);
-export const gauss_siedel_solve = (question) => {
-  const allVariables = grabAllVariables(gaussSiedelQuestion);
-  let step1Latex = String.raw`\begin{aligned} &\text{Let the given equations be, }\\[3pt] &\begin{aligned}`;
-  const step1Result = STEP1(question, allVariables);
+  //STEP1{START}
+  //This will return an array of object that contains latex and leftVars and rightConstant
+  const step1Result = STEP1(parsedGuassSiedelQuestion, allVariables);
+  let leftVarAndRightConst = [];
+  //Add all the latex in the array in the latex to show the first step solved
   step1Result.map((d) => {
-    step1Latex += d.latex;
-  })
-  step1Latex += String.raw`\end{aligned}\\ \end{aligned}`;
-  return step1Latex;
+    //Add to the previous one with latex
+    finalLatex += d.latex;
+      leftVarAndRightConst.push(d.leftVarAndRightConst);
+  });
+  //Add last latex of the first step
+  finalLatex += String.raw`\end{aligned}\\`;
+  //STEP1_LATEX{END}
+    console.log(leftVarAndRightConst);
+
+
+  //STEP2{START}
+    
+  //STEP2{START}
+  
+
+
+  
+
+
+  //Ending phase of the final latex
+  finalLatex += String.raw`
+  \end{aligned}`;
+  return finalLatex;
 };
 
-console.log(gauss_siedel_solve(gaussSiedelQuestion));
+console.log(gauss_siedel_solve("2x+10y=20", "10x+z+y=50", "10y+20z=-x"));

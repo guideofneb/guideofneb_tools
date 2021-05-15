@@ -80,7 +80,6 @@ const STEP1 = (question, _allVars) => {
     let abs0 = parseInt((leftVarsArray[0].match(/[0-9]{1,}/) ?? [1])[0])
     let abs1 = parseInt((leftVarsArray[1].match(/[0-9]{1,}/) ?? [1])[0])
     let abs2 = parseInt((leftVarsArray[2].match(/[0-9]{1,}/) ?? [1])[0])
-    
     //If the absolute value of coefficent of first is greater than sum of absolute value of coefficent of second and third then its at first 
     if (abs0 > abs1 + abs2) {
       dominantArray[0] = index;
