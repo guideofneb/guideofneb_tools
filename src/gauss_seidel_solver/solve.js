@@ -43,4 +43,4 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   \end{aligned}`;
   return finalLatex;
 };
-console.log(gauss_siedel_solve("10x+20y+z=-2+x", "20x+10y=50-z", "20x+y+24z=2"));
+console.log(gauss_siedel_solve("10x+20y+z=-2+x", "-20x+10y=50-z", "20x+y+24z=2"));
