@@ -31,7 +31,6 @@ const STEP1 = (question, _allVars) => {
     ) {
       EquationStepsLatex.push(question[eq].parsedEq.latexArray[2]);
     }
-    console.log(EquationStepsLatex);
     const finalizedVars = addMissingVars(
       question[eq].parsedEq.leftVars,
       _allVars

@@ -6,7 +6,6 @@
 // Eg. ["20z","+2y","+2x"] into ["2x","+2y","+20z"]
 const addMissingVars = (varsArray, allVars) => {
   // Final leftVars that is to be returned after adding missing var .Eg before : ["y","+10z"] after : ["0x","+y","+10z"]
-  console.log(varsArray);
   const finalLeftVars = [];
   // Grab all the variables present currently in the leftVar of this equation excluding the sign and coefficient
   const allVarsFromleftVars = varsArray.map((SignCoeffAndVar) => {

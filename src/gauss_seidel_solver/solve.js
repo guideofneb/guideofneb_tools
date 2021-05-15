@@ -36,6 +36,10 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   finalLatex += String.raw`\end{aligned}\\`;
   //STEP1_LATEX{END}
 
+
+
+
+
   //STEP2{START}
     
   //STEP2{START}
@@ -45,6 +49,6 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   \end{aligned}`;
   return finalLatex;
 };
-console.log(gauss_siedel_solve("2x+10y=-2", "10x=50", "2x+10=2"));
+console.log(gauss_siedel_solve("10z=-2", "10y=50", "10x+10=2"));
 
 
