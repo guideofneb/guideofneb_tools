@@ -24,6 +24,11 @@ const addMissingVars = (varsArray, allVars) => {
       if (index !== 0 && dataFromFilter.match(/(\+|\-)/) === null) {
         dataFromFilter = "+" + dataFromFilter;
       }
+        // If the index is first and it has "+" sign then it should be nothing i.e an empty strign
+        if(index === 0){
+         dataFromFilter = dataFromFilter.replace("+","");
+        }
+
       finalLeftVars.push(dataFromFilter);
     } else {
       // If index is not 0 then it means + should be the prefix sign
