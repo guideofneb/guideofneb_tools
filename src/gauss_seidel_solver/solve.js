@@ -29,19 +29,18 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   step1Result.map((d) => {
     //Add to the previous one with latex
     finalLatex += d.latex;
-      leftVarAndRightConst.push(d.leftVarAndRightConst);
+    leftVarAndRightConst.push(d.leftVarAndRightConst);
   });
   //Add last latex of the first step
   finalLatex += String.raw`\end{aligned}\\[-4pt]`;
   //STEP1_LATEX{END}
 
-  finalLatex +=STEP2(leftVarAndRightConst);
-   
-  
+  finalLatex += STEP2(leftVarAndRightConst);
+
+
   //Ending phase of the final latex
   finalLatex += String.raw`
   \end{aligned}`;
   return finalLatex;
 };
 console.log(gauss_siedel_solve("10x+20y+z=-2+x", "20x+10y=50-z", "20x+y+24z=2"));
-
