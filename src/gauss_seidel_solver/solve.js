@@ -42,15 +42,10 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
     
   //STEP2{START}
   
-
-
-  
-
-
   //Ending phase of the final latex
   finalLatex += String.raw`
   \end{aligned}`;
   return finalLatex;
 };
 
-console.log(gauss_siedel_solve("2x+10y=20", "10x+z+y=50", "10y+20z=-x"));
+console.log(gauss_siedel_solve("2x+10y=-2", "10x+y+z=50", "2x+10z=2"));

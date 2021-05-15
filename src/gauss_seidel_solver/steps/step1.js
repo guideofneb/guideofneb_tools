@@ -1,5 +1,6 @@
 import addMissingVars from "../shared/addMissingVars.js";
 import EquationProcessLatex from "../shared/equationProcessLatex.js";
+import areArrayEqual from '../shared/areArrayEqual.js'
 // Step1 basically takes two things,
 // 1 => It takes the question which is parsed using gauss siedel parser and it contains
 // the equation solved in latex form and leftvars and right constant (question)
@@ -29,11 +30,12 @@ const STEP1 = (question, _allVars) => {
     ) {
       EquationStepsLatex.push(question[eq].parsedEq.latexArray[2]);
     }
+    console.log(EquationStepsLatex);
     const finalizedVars = addMissingVars(
       question[eq].parsedEq.leftVars,
       _allVars
     );
-    if (finalizedVars !== question[eq].parsedEq.leftVars) {
+    if (!areArrayEqual(finalizedVars,question[eq].parsedEq.leftVars)) {
       let finalLatex = "";
       finalizedVars.map((SignCoeffAndVar) => {
         finalLatex += String.raw`${SignCoeffAndVar.replace(
@@ -44,7 +46,6 @@ const STEP1 = (question, _allVars) => {
       finalLatex += String.raw`=${question[eq].parsedEq.rightConstant}`;
       EquationStepsLatex.push(finalLatex);
     }
-
     //FinalVars and RightConstant data and latex of the equation processed passed
     Step1LatexArrayLeftVarsAndRightConst.push({
       latex: String.raw`${EquationProcessLatex(
@@ -59,7 +60,6 @@ const STEP1 = (question, _allVars) => {
     //Increment the equationNo so that it can be passed into EquationProcessLatex function and it can label the equation
     equationNo++;
   }
-    
 
   /*
    * Align Step1LatexArrayLeftVarsAndRightConst in diagonal dominant form
@@ -77,19 +77,19 @@ const STEP1 = (question, _allVars) => {
     // abs0 => Absolute value of Coefficient first i.e coefficient of x in x + y + z = 20
     // abs1 => Absolute value of Coefficient second i.e coefficient of y in x + y + z = 20
     // abs2 => Absolute value of Coefficient third i.e coefficient of z in x + y + z = 20
-    let abs0 = parseInt((leftVarsArray[0].match(/[0-9]{1,}/) ?? [1])[0])
-    let abs1 = parseInt((leftVarsArray[1].match(/[0-9]{1,}/) ?? [1])[0])
-    let abs2 = parseInt((leftVarsArray[2].match(/[0-9]{1,}/) ?? [1])[0])
-    //If the absolute value of coefficent of first is greater than equal to sum of absolute value of coefficent of second and third then its at first 
-    if (abs0 >= (abs1 + abs2)) {
+    let abs0 = parseInt((leftVarsArray[0].match(/[0-9]{1,}/) ?? [1])[0]);
+    let abs1 = parseInt((leftVarsArray[1].match(/[0-9]{1,}/) ?? [1])[0]);
+    let abs2 = parseInt((leftVarsArray[2].match(/[0-9]{1,}/) ?? [1])[0]);
+    //If the absolute value of coefficent of first is greater than equal to sum of absolute value of coefficent of second and third then its at first
+    if (abs0 >= abs1 + abs2) {
       dominantArray[0] = index;
     }
-    //If the absolute value of coefficent of second is greater than equal to sum of absolute value of coefficent of first and third then its at first 
-    if (abs1 >= (abs0 + abs2)) {
+    //If the absolute value of coefficent of second is greater than equal to sum of absolute value of coefficent of first and third then its at first
+    if (abs1 >= abs0 + abs2) {
       dominantArray[1] = index;
     }
-    //If the absolute value of coefficent of third is greater than equal to sum of absolute value of coefficent of first and second then its at first 
-    if (abs2 >= (abs0 + abs1)) {
+    //If the absolute value of coefficent of third is greater than equal to sum of absolute value of coefficent of first and second then its at first
+    if (abs2 >= abs0 + abs1) {
       dominantArray[2] = index;
     }
   });
@@ -100,25 +100,29 @@ const STEP1 = (question, _allVars) => {
     dominantArraySET.add(indexes);
   });
   // Reassign dominant array to the unique index array
-  dominantArray = Array.from(dominantArraySET).filter((e)=> e !== null);
+  dominantArray = Array.from(dominantArraySET).filter((e) => e !== null);
   if (dominantArray.length === 3) {
     // Change the order of "Step1LatexArrayLeftVarsAndRightConst" such that diagonally dominant form is present from the index of the elements in
     // the array "dominantArray"
     Step1LatexArrayLeftVarsAndRightConst = dominantArray.map(
-      (equationIndex,index) => {
+      (equationIndex, index) => {
         //Fixing the equationNumbering
-        const tobeReturnedLatexAndVarArray = Step1LatexArrayLeftVarsAndRightConst[equationIndex];
-        const _equationNo  = index + 1;
+        const tobeReturnedLatexAndVarArray =
+          Step1LatexArrayLeftVarsAndRightConst[equationIndex];
+        const _equationNo = index + 1;
         const equationNum =
-        _equationNo === 1
-        ? `i`
-        : _equationNo === 2
-        ? `ii`
-        : _equationNo === 3
-        ? `iii`
-        : ``;
-        tobeReturnedLatexAndVarArray.latex = tobeReturnedLatexAndVarArray.latex.replace(/\([i]{3}\)/,String.raw`(${equationNum})`)
-       return tobeReturnedLatexAndVarArray;
+          _equationNo === 1
+            ? `i`
+            : _equationNo === 2
+            ? `ii`
+            : _equationNo === 3
+            ? `iii`
+            : ``;
+        tobeReturnedLatexAndVarArray.latex = tobeReturnedLatexAndVarArray.latex.replace(
+          /\([i]{3}\)/,
+          String.raw`(${equationNum})`
+        );
+        return tobeReturnedLatexAndVarArray;
       }
     );
   } else {
