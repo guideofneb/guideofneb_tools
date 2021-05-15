@@ -25,7 +25,7 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   //STEP1{START}
   //This will return an array of object that contains latex and leftVars and rightConstant
   const step1Result = STEP1(parsedGuassSiedelQuestion, allVariables);
-  let leftVarAndRightConst = [];
+  const leftVarAndRightConst = [];
   //Add all the latex in the array in the latex to show the first step solved
   step1Result.map((d) => {
     //Add to the previous one with latex
@@ -35,8 +35,6 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   //Add last latex of the first step
   finalLatex += String.raw`\end{aligned}\\`;
   //STEP1_LATEX{END}
-    console.log(leftVarAndRightConst);
-
 
   //STEP2{START}
     
@@ -47,5 +45,6 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   \end{aligned}`;
   return finalLatex;
 };
+console.log(gauss_siedel_solve("2x+10y=-2", "10x=50", "2x+10=2"));
 
-console.log(gauss_siedel_solve("2x+10y=-2", "10x+y+z=50", "2x+10z=2"));
+

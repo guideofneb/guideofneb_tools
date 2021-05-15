@@ -1,6 +1,7 @@
 import addMissingVars from "../shared/addMissingVars.js";
 import EquationProcessLatex from "../shared/equationProcessLatex.js";
 import areArrayEqual from '../shared/areArrayEqual.js'
+import {NOT_DIAGONALLY_DOMINANT} from '../shared/errors.js';
 // Step1 basically takes two things,
 // 1 => It takes the question which is parsed using gauss siedel parser and it contains
 // the equation solved in latex form and leftvars and right constant (question)
@@ -127,7 +128,7 @@ const STEP1 = (question, _allVars) => {
     );
   } else {
     //If not diagonally dominant then just throw an error stating "Not Diagonally Dominant"
-    throw "Not Diagonally Dominant";
+    throw NOT_DIAGONALLY_DOMINANT;
   }
   return Step1LatexArrayLeftVarsAndRightConst;
 };

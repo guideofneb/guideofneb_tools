@@ -1,4 +1,4 @@
-
+import {THREE_UNIQUE_VARS_NOT_FOUND} from './errors.js';
 // Takes GuassSiedelQuestionParser object which is an object of questions and returns all the possible variables
 const grabAllVariables = (question)=>{
     // Sets, so that only that same variable dont get inserted 
@@ -6,13 +6,19 @@ const grabAllVariables = (question)=>{
     // Iterate over the question object
     for (const eq in question){
         // Grab the leftVars array from the parsedEquation add all its variables to the allVars set
-        let a = question[eq].parsedEq.leftVars.map((SignCoeffAndVar)=>{
+        question[eq].parsedEq.leftVars.map((SignCoeffAndVar)=>{
             // Regex used here to match only the variable out of the SignCoeffAndVar
             allVars.add(SignCoeffAndVar.match(/[A-Za-z]/)[0]);
-        })
+        });
     }
     // Converts the set into array and returns it
-    return Array.from(allVars).sort();
+    const returnArray = Array.from(allVars).sort();
+    if(returnArray.length === 3) {
+       return Array.from(allVars).sort();
+    }else{
+        throw THREE_UNIQUE_VARS_NOT_FOUND;
+    }
+
 }
 
 export default grabAllVariables;
