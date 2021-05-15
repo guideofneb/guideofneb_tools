@@ -21,7 +21,6 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
     &\text{Let the given equations be, }\\[3pt] 
     &\begin{aligned}
     `;
-
   //STEP1{START}
   //This will return an array of object that contains latex and leftVars and rightConstant
   const step1Result = STEP1(parsedGuassSiedelQuestion, allVariables);
@@ -33,22 +32,16 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
       leftVarAndRightConst.push(d.leftVarAndRightConst);
   });
   //Add last latex of the first step
-  finalLatex += String.raw`\end{aligned}\\`;
+  finalLatex += String.raw`\end{aligned}\\[-4pt]`;
   //STEP1_LATEX{END}
 
-
-
-
-
-  //STEP2{START}
-    
-  //STEP2{START}
+  finalLatex +=STEP2(leftVarAndRightConst);
+   
   
   //Ending phase of the final latex
   finalLatex += String.raw`
   \end{aligned}`;
   return finalLatex;
 };
-console.log(gauss_siedel_solve("10z=-2", "10y=50", "10x+10=2"));
-
+console.log(gauss_siedel_solve("10x+20y+z=-2+x", "20x+10y=50-z", "20x+y+24z=2"));
 
