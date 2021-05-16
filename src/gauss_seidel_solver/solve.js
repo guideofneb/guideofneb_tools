@@ -2,7 +2,6 @@ import { GaussSiedelQuestionParser } from "./shared/GuassSiedelQuestionParser.js
 import grabAllVariables from "./shared/grabAllVariables.js";
 import STEP1 from "./steps/step1.js";
 import STEP2 from "./steps/step2.js";
-
 // It takes question in raw form
 // Eg. gauss_siedel_solve(""2x+10y=-19","10z+2y+x=5","30x+10y+z=-1")
 // It will return a raw string of latex that is the solved solution with process
@@ -34,13 +33,12 @@ export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   //Add last latex of the first step
   finalLatex += String.raw`\end{aligned}\\[-4pt]`;
   //STEP1_LATEX{END}
-
-  finalLatex += STEP2(leftVarAndRightConst);
-
-
+  finalLatex += STEP2(leftVarAndRightConst).finalLatex;
   //Ending phase of the final latex
   finalLatex += String.raw`
   \end{aligned}`;
   return finalLatex;
 };
-console.log(gauss_siedel_solve("10x+20y+z=-2+x", "-20x+10y=50-z", "20x+y+24z=2"));
+console.log(performance.now())
+console.log(gauss_siedel_solve("3x+y-z=2","5y+z=20+4", "x-3y=3+8z"));
+console.log(performance.now())

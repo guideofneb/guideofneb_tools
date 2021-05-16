@@ -72,7 +72,7 @@ const STEP1 = (question, _allVars) => {
     Step1LatexArrayLeftVarsAndRightConst[2].leftVarAndRightConst.leftVars,
   ];
   let dominantArray = [null, null, null];
-  allLeftVars.map((leftVarsArray, index) => {
+  allLeftVars.map((leftVarsArray,index) => {
     // Get the absolute value of the coefficient and it the coefficient is not present it means 1 is there
     // abs0 => Absolute value of Coefficient first i.e coefficient of x in x + y + z = 20
     // abs1 => Absolute value of Coefficient second i.e coefficient of y in x + y + z = 20
@@ -81,23 +81,24 @@ const STEP1 = (question, _allVars) => {
     let abs1 = parseInt((leftVarsArray[1].match(/[0-9]{1,}/) ?? [1])[0]);
     let abs2 = parseInt((leftVarsArray[2].match(/[0-9]{1,}/) ?? [1])[0]);
     //If the absolute value of coefficent of first is greater than equal to sum of absolute value of coefficent of second and third then its at first
-    if (abs0 >= abs1 + abs2) {
+    if (abs0 > abs1 + abs2) {
       dominantArray[0] = index;
     }
     //If the absolute value of coefficent of second is greater than equal to sum of absolute value of coefficent of first and third then its at first
-    if (abs1 >= abs0 + abs2) {
-      dominantArray[1] = index;
+    if (abs1 > abs0 + abs2) {
+        dominantArray[1] = index 
     }
     //If the absolute value of coefficent of third is greater than equal to sum of absolute value of coefficent of first and second then its at first
-    if (abs2 >= abs0 + abs1) {
-      dominantArray[2] = index;
+    if (abs2 > abs0 + abs1) {
+        dominantArray[2] = index
     }
   });
   // Convert array into a set and store only unique value and check for length, if length is less than 3 then it means its not diagonally
   // dominant and throws error "Not Diagonally Dominant"
+    // Index 0 is for firstOne i.e x in x + y + z i.e all the indexes where x is dominant and same goes for Index 1 and 2
   const dominantArraySET = new Set();
-  dominantArray.map((indexes) => {
-    dominantArraySET.add(indexes);
+  dominantArray.map((data) => {
+    dominantArraySET.add(data);
   });
   // Reassign dominant array to the unique index array
   dominantArray = Array.from(dominantArraySET).filter((e) => e !== null);
