@@ -77,7 +77,7 @@ const STEP2 = (leftVarAndRightConst) => {
       finalReturnLeftRightSideAndLatex.leftRightSide.push({
             leftSide : leftSide,
           rightSide : rightSide
-     })
+     });
     });
     step2finalLatex += String.raw`\end{aligned} \\`;
     finalReturnLeftRightSideAndLatex.finalLatex = step2finalLatex
