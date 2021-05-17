@@ -54,7 +54,7 @@ const STEP3 = (leftRightSide) => {
  */
 const Iterative = (varAndValue, iterationsFinalLatex, leftRightSide,operations,iterationNo) => {
     let iterationStepsCompleteLatex = leftRightSide.map((d,i)=>{
-        let oneEquation = String.raw`\hspace{8pt}&`;
+        let oneEquation = String.raw`&\hspace{10pt}`;
         oneEquation += String.raw`\text{${d.leftSide[0]}}=`+
         String.raw`${d.rightSide.denom < 0 ? "-" : ""}\dfrac{1}{${Math.abs(d.rightSide.denom)}}`+
         String.raw`\left( ${d.rightSide.rightSide[0]}`+ 

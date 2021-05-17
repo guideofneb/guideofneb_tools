@@ -5,6 +5,7 @@ import STEP2 from "./steps/step2.js";
 import STEP3 from './steps/step3.js';
 // It takes question in raw form
 // Eg. gauss_siedel_solve(""2x+10y=-19","10z+2y+x=5","30x+10y+z=-1")
+
 export const gauss_siedel_solve = (equation1, equation2, equation3) => {
   const parsedGuassSiedelQuestion = new GaussSiedelQuestionParser(
     equation1,
