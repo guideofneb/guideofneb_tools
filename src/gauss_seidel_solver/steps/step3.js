@@ -78,7 +78,9 @@ const Iterative = (varAndValue, iterationsFinalLatex, leftRightSide,operations,i
     iterationStepsCompleteLatex = iterationStepsCompleteLatex.reduce((a,b)=>{return a+b});
     iterationsFinalLatex += String.raw`&\begin{aligned}&`+`\\underline{\\text{Iteration : ${iterationNo}`+String.raw`}}\\`
     iterationsFinalLatex += iterationStepsCompleteLatex + String.raw`\end{aligned}\\ `;
-   //Recursion if any of them becomes a non integer i.e a float value
+
+
+   //Recurse if any of the value from varAndValue becomes a non integer i.e a float value
   if(varAndValue[0].value % 1 !== 0  || varAndValue[1].value % 1 !==0 || varAndValue[2].value % 1 !== 0) {
      iterationNo++;
      return Iterative(varAndValue,iterationsFinalLatex,leftRightSide,operations,iterationNo);
@@ -90,5 +92,4 @@ const Iterative = (varAndValue, iterationsFinalLatex, leftRightSide,operations,i
        }
    }
 };
-
 export default STEP3;
