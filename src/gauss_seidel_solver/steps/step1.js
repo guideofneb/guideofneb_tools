@@ -130,6 +130,7 @@ const STEP1 = (question, _allVars) => {
     //If not diagonally dominant then just throw an error stating "Not Diagonally Dominant"
     throw NOT_DIAGONALLY_DOMINANT;
   }
+
   return Step1LatexArrayLeftVarsAndRightConst;
 };
 export default STEP1;

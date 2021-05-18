@@ -1,4 +1,4 @@
-import {makeItStandard} from '../OneDegreeEquationStandardizer/oneDegreeEquationStandardizer.min.js';
+import {makeItStandard} from '../libs/oneDegreeEquationStandardizer.min.js';
 class ParsedEquation{
     parsedEq;
     constructor(rawEqn){
@@ -6,7 +6,7 @@ class ParsedEquation{
     }
 }
 // Takes three RawEquation String and converts them into parsed equation using the makeitstandard function
-export class GaussSiedelQuestionParser{
+class GaussSiedelQuestionParser{
     equation1;
     equation2;
     equation3;
@@ -16,5 +16,5 @@ export class GaussSiedelQuestionParser{
         this.equation3  = new ParsedEquation(rawEq3);
     }
 }
-
+export default GaussSiedelQuestionParser;
 

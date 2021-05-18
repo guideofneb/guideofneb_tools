@@ -1,5 +1,5 @@
 //import mathExpressionEvaluator from 'https://cdn.skypack.dev/math-expression-evaluator';
-import mathExpressionEvaluator from "../math-expr_eval.js";
+import mathExpressionEvaluator from "../libs/math-expr_eval.js";
 import { TOO_MANY_ITERATIONS } from '../shared/errors.js';
 const STEP3 = (leftRightSide) => {
   /*
