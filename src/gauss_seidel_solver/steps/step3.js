@@ -30,7 +30,7 @@ const STEP3 = (leftRightSide) => {
   );
   return {
     finalLatex: value.iterationsFinalLatex,
-    finalValues: [{ x: 1 }, { y: 2 }, { z: 3 }],
+    finalValues: value.varAndValue,
   };
 };
 
@@ -133,7 +133,7 @@ const Iterative = (varAndValue, iterationsFinalLatex, leftRightSide, operations,
       String.raw`&\begin{aligned}&` +
       `\\underline{\\text{Iteration : ${iterationNo}` +
       String.raw`}}\\`;
-    iterationsFinalLatex += iterationStepsCompleteLatex + String.raw`\end{aligned}\\ `;
+    iterationsFinalLatex += iterationStepsCompleteLatex + String.raw`\end{aligned}\\`;
     iterationNo++;
     return Iterative(varAndValue, iterationsFinalLatex, leftRightSide, operations, iterationNo);
   }
