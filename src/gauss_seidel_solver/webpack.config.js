@@ -5,6 +5,5 @@ module.exports = {
   output: {
     filename: 'gauss_seidel_solver.js',
     path: path.resolve(__dirname, 'release'),
-    library : "react"
   },
 };
