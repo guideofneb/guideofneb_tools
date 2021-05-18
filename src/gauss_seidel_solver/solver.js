@@ -28,4 +28,4 @@ const gauss_siedel_solve = (equation1, equation2, equation3) => {
   return retLatex;
 };
 export default gauss_siedel_solve;
-console.log(gauss_siedel_solve("3x+20y-z=-18","20x+y-2z=17", "2x-3y+20z=25"));
+console.log(gauss_siedel_solve("3x-y+z=-1","-x+3y-z=7", "x-y+3z=-7"));

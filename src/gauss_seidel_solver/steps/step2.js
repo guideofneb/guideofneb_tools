@@ -1,18 +1,22 @@
 /*
  * STEP2 takes leftVarAndRightConst as input parameter, which is just array of objects
  * that contains the leftVar and rightConstant
- * 
+ * Eg. leftVarAndRightConst = [
+ *      { leftVars: [ "3x", "-y", "+z" ], rightConstant: [ "-1" ] },
+ *      { leftVars: [ "-x", "+3y", "-z" ], rightConstant: [ "7" ] },
+ *      { leftVars: [ "x", "-y", "+3z" ], rightConstant: [ "-7" ] } 
+ * ];
+ *
  * It then iterates over the leftVarAndRightConst array and takes each object and does processing over it
  * By processing, i mean its solved into loner form and its latex to reach that step is produced 
  * 
- *
  */
-const STEP2 = (leftVarAndRightConst) => {
-    const finalReturnLeftRightSideAndLatex = {
+const Step2 = (leftVarAndRightConst) => {
+  // Final latex and final left and right side to be returned
+  const finalReturnLeftRightSideAndLatex = {
         finalLatex : "",
         leftRightSide : []
-  }
-
+  };
   let step2finalLatex = String.raw`&\text{From equations (i), (ii) and (iii) respectivley we have,}\\[6pt] &\begin{aligned}`;
   //Iterate over all the leftVar and RightConst objects in leftVarAndRightConst
   leftVarAndRightConst.map((d, i) => {
@@ -58,7 +62,6 @@ const STEP2 = (leftVarAndRightConst) => {
               String.raw`= ${rightSide.denom < 0 ? "-" : "" } \dfrac{ 1 } { ${Math.abs(rightSide.denom)} }`+
               String.raw`\left(${rightSide.rightSide[0]}` + String.raw`${rightSide.rightSide[1]} ${rightSide.rightSide[2]}`.replace(/([A-Za-z])/g,String.raw`\text{$1}`)+String.raw`\right)`);
       }
-
     //Beginning of finalLatex of a equation that is to be returned
     let finalLatex = String.raw`\left.\begin{aligned}`;
       //Iterate over all the steps made of latex of making lone pair i.e only one variable to the left
@@ -83,4 +86,4 @@ const STEP2 = (leftVarAndRightConst) => {
     finalReturnLeftRightSideAndLatex.finalLatex = step2finalLatex
   return finalReturnLeftRightSideAndLatex;
 };
-export default STEP2;
+export default Step2;
