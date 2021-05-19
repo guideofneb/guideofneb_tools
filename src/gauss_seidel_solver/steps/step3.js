@@ -1,6 +1,6 @@
 //import mathExpressionEvaluator from 'https://cdn.skypack.dev/math-expression-evaluator';
 import mathExpressionEvaluator from "../libs/math-expr-eval.js";
-import { TOO_MANY_ITERATIONS } from '../shared/errors.js';
+import * as ERRORS from '../shared/errors.ts';
 const STEP3 = (leftRightSide) => {
   /*
    * Iterative will take first parameter as varAndValue and it will me in the following form
@@ -51,7 +51,7 @@ const STEP3 = (leftRightSide) => {
 
 const Iterative = (varAndValue, iterationsFinalLatex, leftRightSide, operations, iterationNo = 1) => {
     if(iterationNo > 25){
-        throw TOO_MANY_ITERATIONS;
+        throw ERRORS.TOO_MANY_ITERATIONS;
     }
     const prevVarVal = JSON.parse(JSON.stringify(varAndValue));
     console.log()

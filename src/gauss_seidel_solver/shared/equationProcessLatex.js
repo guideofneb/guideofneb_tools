@@ -1,4 +1,4 @@
-const EquationProcessLatex = (_equationLatexSteps, _equationNo) => {
+const EquationProcessLatex = (_equationLatexSteps) => {
   // latex that is to be returned finally, initially set to an empty String
   let latexCombined = String.raw``;
   // If the equation equationLatexSteps is 1 in length then give it equation numbering without arrow and end it there

@@ -1,41 +1,34 @@
-import addMissingVars from "../shared/addMissingVars.js";
+import {GaussSiedelQuestionParserType, KeyOfQuestion} from '../types.d.ts';
+import addMissingVars from "../shared/addMissingVars.ts";
 import EquationProcessLatex from "../shared/equationProcessLatex.js";
-import areArrayEqual from '../shared/areArrayEqual.js'
-import {NOT_DIAGONALLY_DOMINANT} from '../shared/errors.js';
-// Step1 basically takes two things,
-// 1 => It takes the question which is parsed using gauss siedel parser and it contains
-// the equation solved in latex form and leftvars and right constant (question)
-// 2 => It takes all the variables that are present in all three equations (_allVars)
-//
+import areArrayEqual from '../shared/areArrayEqual.ts';
+import * as ERRORS from '../shared/errors.ts';
+import * as TYPES from '../types.d.ts';
+
 // This function will return an array of three object that contains latex, final leftVars and rightConstant of each equation
-const STEP1 = (question, _allVars) => {
-  //All three latex equations steps will be kept in this array
-  let Step1LatexArrayLeftVarsAndRightConst = [];
-  //Set the equation no that is currently being iterated initially at 1
-  let equationNo = 1;
+const STEP1 = (question : GaussSiedelQuestionParserType, _allVars : string[]) => {
+  //All three latex equations steps will be kept in this array and step1 will return this as its function return 
+  let Step1LatexArrayLeftVarsAndRightConst : TYPES.STEP1 = []
   //Iterate over all the parsed equations in the Question
   for (const eq in question) {
-    //Set the equation steps empty initially
-    const EquationStepsLatex = [];
-    //First step is going to be the question that is being enterd by the question and it is the index 0 of the latex array
-    EquationStepsLatex.push(question[eq].parsedEq.latexArray[0]);
-    if (
-      question[eq].parsedEq.latexArray[1] !==
-      question[eq].parsedEq.latexArray[0]
-    ) {
-      EquationStepsLatex.push(question[eq].parsedEq.latexArray[1]);
+  // Destructure the first item of question
+  const {latexArray, leftVars , rightConstant} = question[eq as KeyOfQuestion];
+    // Set the equation steps empty initially
+    const EquationStepsLatex : string[]= [];
+    // First element of EquationStepsLatex is going to be the question that is being enterd by the user and it is the index 0 of the latex array
+    EquationStepsLatex.push(question[eq as KeyOfQuestion].latexArray[0]);
+    // If second element is not same as first element then add it to the EquationStepsLatex
+    if (latexArray[1] !== latexArray[0]) {
+      EquationStepsLatex.push(latexArray[1]);
     }
-    if (
-      question[eq].parsedEq.latexArray[2] !==
-      question[eq].parsedEq.latexArray[1]
-    ) {
-      EquationStepsLatex.push(question[eq].parsedEq.latexArray[2]);
+    // Similarly, if second element is not same as first element then add it to the EquationStepsLatex
+    if (latexArray[2] !== latexArray[1]) {
+      EquationStepsLatex.push(latexArray[2]);
     }
-    const finalizedVars = addMissingVars(
-      question[eq].parsedEq.leftVars,
-      _allVars
-    );
-    if (!areArrayEqual(finalizedVars,question[eq].parsedEq.leftVars)) {
+    // Adds missing variables or aligns the array such that its arranged acoridng to the _allVars
+    const finalizedVars : string[] = addMissingVars(leftVars, _allVars);
+    // If leftVars and finalizedVars array aren't same then create a latex that basically means its arranged from previous state
+    if (!areArrayEqual(finalizedVars,leftVars)) {
       let finalLatex = "";
       finalizedVars.map((SignCoeffAndVar) => {
         finalLatex += String.raw`${SignCoeffAndVar.replace(
@@ -43,23 +36,19 @@ const STEP1 = (question, _allVars) => {
           String.raw`\text{$1}`
         )}`;
       });
-      finalLatex += String.raw`=${question[eq].parsedEq.rightConstant}`;
+      finalLatex += String.raw`=${rightConstant}`;
       EquationStepsLatex.push(finalLatex);
     }
-    //FinalVars and RightConstant data and latex of the equation processed passed
+    //finalVars and rightConstant data and latex of the equation processed passed to the final array that is used to return
     Step1LatexArrayLeftVarsAndRightConst.push({
-      latex: String.raw`${EquationProcessLatex(
-        EquationStepsLatex,
-        equationNo
-      )}`,
+      latex: String.raw`${EquationProcessLatex(EquationStepsLatex)}`,
       leftVarAndRightConst: {
         leftVars: finalizedVars,
-        rightConstant: question[eq].parsedEq.rightConstant,
+        rightConstant: rightConstant,
       },
     });
-    //Increment the equationNo so that it can be passed into EquationProcessLatex function and it can label the equation
-    equationNo++;
   }
+
 
   /*
    * Align Step1LatexArrayLeftVarsAndRightConst in diagonal dominant form
@@ -71,15 +60,15 @@ const STEP1 = (question, _allVars) => {
     Step1LatexArrayLeftVarsAndRightConst[1].leftVarAndRightConst.leftVars,
     Step1LatexArrayLeftVarsAndRightConst[2].leftVarAndRightConst.leftVars,
   ];
-  let dominantArray = [null, null, null];
+  let dominantArray : number[] = [-1, -1, -1];
   allLeftVars.map((leftVarsArray,index) => {
     // Get the absolute value of the coefficient and it the coefficient is not present it means 1 is there
     // abs0 => Absolute value of Coefficient first i.e coefficient of x in x + y + z = 20
     // abs1 => Absolute value of Coefficient second i.e coefficient of y in x + y + z = 20
     // abs2 => Absolute value of Coefficient third i.e coefficient of z in x + y + z = 20
-    let abs0 = parseInt((leftVarsArray[0].match(/[0-9]{1,}/) ?? [1])[0]);
-    let abs1 = parseInt((leftVarsArray[1].match(/[0-9]{1,}/) ?? [1])[0]);
-    let abs2 = parseInt((leftVarsArray[2].match(/[0-9]{1,}/) ?? [1])[0]);
+    const abs0 = parseInt((leftVarsArray[0].match(/[0-9]{1,}/) ?? ["1"])[0]);
+    const abs1 = parseInt((leftVarsArray[1].match(/[0-9]{1,}/) ?? ["1"])[0]);
+    const abs2 = parseInt((leftVarsArray[2].match(/[0-9]{1,}/) ?? ["1"])[0]);
     //If the absolute value of coefficent of first is greater than equal to sum of absolute value of coefficent of second and third then its at first
     if (abs0 > abs1 + abs2) {
       dominantArray[0] = index;
@@ -96,12 +85,13 @@ const STEP1 = (question, _allVars) => {
   // Convert array into a set and store only unique value and check for length, if length is less than 3 then it means its not diagonally
   // dominant and throws error "Not Diagonally Dominant"
     // Index 0 is for firstOne i.e x in x + y + z i.e all the indexes where x is dominant and same goes for Index 1 and 2
-  const dominantArraySET = new Set();
+  const dominantArraySET : Set<number> = new Set();
   dominantArray.map((data) => {
     dominantArraySET.add(data);
   });
   // Reassign dominant array to the unique index array
-  dominantArray = Array.from(dominantArraySET).filter((e) => e !== null);
+  dominantArray = Array.from(dominantArraySET).filter((e) => e !== -1) as number[];
+
   if (dominantArray.length === 3) {
     // Change the order of "Step1LatexArrayLeftVarsAndRightConst" such that diagonally dominant form is present from the index of the elements in
     // the array "dominantArray"
@@ -128,7 +118,7 @@ const STEP1 = (question, _allVars) => {
     );
   } else {
     //If not diagonally dominant then just throw an error stating "Not Diagonally Dominant"
-    throw NOT_DIAGONALLY_DOMINANT;
+    throw ERRORS.NOT_DIAGONALLY_DOMINANT;
   }
 
   return Step1LatexArrayLeftVarsAndRightConst;
