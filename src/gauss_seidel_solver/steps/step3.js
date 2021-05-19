@@ -1,5 +1,5 @@
 //import mathExpressionEvaluator from 'https://cdn.skypack.dev/math-expression-evaluator';
-import mathExpressionEvaluator from "../libs/math-expr-eval.js";
+import mathExpressionEvaluator from "../../../libs/math-expr-eval.js";
 import * as ERRORS from '../shared/errors.ts';
 const STEP3 = (leftRightSide) => {
   /*
