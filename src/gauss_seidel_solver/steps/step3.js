@@ -54,7 +54,6 @@ const Iterative = (varAndValue, iterationsFinalLatex, leftRightSide, operations,
         throw ERRORS.TOO_MANY_ITERATIONS;
     }
     const prevVarVal = JSON.parse(JSON.stringify(varAndValue));
-    console.log()
     let iterationStepsCompleteLatex = leftRightSide.map((d, i) => {
     let oneEquation = String.raw`&\hspace{10pt}`;
     oneEquation +=

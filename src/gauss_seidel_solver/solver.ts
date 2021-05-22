@@ -35,4 +35,3 @@ const gaussSiedelSolver = (equation1 : string, equation2 : string, equation3: st
 };
 
 export default gaussSiedelSolver;
-
